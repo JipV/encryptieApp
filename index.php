@@ -1,16 +1,17 @@
 <?php			
-include_once("phpcrypt/phpCrypt.php");
-use PHP_Crypt\PHP_Crypt as PHP_Crypt;
+	include_once("phpcrypt/phpCrypt.php");
+	use PHP_Crypt\PHP_Crypt as PHP_Crypt;
 ?>
-<html>
 
+<html>
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title>Le beautiful encrypion web app for vewy,vewy secure storage</title>
 	</head>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<body>
+
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 well">
@@ -24,31 +25,29 @@ use PHP_Crypt\PHP_Crypt as PHP_Crypt;
 					</form>
 				</div>
 				<div class="col-md-4 col-md-push-2 well">
-					<h1>Decrypt-R-us</h1>
-						<h4>Don't worry, it's suuuuuuper safe</h4>
 					<form method="post">
+						<h1>Decrypt-R-us</h1>
+						<h4>Don't worry, it's suuuuuuper safe</h4>
 						<p><label for="username">Naam: <input class="form-control" type='text' id="username" name="username"/></label></p>
 						<p><label for="password">Wachtwoord: <input  class="form-control" type='password'  id="password" name="password"/></label></p>
-						<p><input type="submit" value="reveal my secret" class="btn btn-primary"/></p>
+						<p><input type="submit" value="Reveal my secret" class="btn btn-primary"/></p>
 					</form>
 				</div>
 			</div>
 		</div>
+
 		<?php
 
 			if(isset($_POST['naam']) && isset($_POST['wachtwoord']) && isset($_POST['geheim'])){
 				$data = $_POST['geheim'];
-			$key  = "SuchSecretKeyVeryWowMuchFantastic";
-			$crypt = new PHP_Crypt($key, PHP_Crypt::CIPHER_AES_128, PHP_Crypt::MODE_ECB);
-			$encryptedSecret = $crypt->encrypt($data);
-			$encryptedPass = $crypt->encrypt($_POST['wachtwoord']);
+				$key  = "SuchSecretKeyVeryWowMuchFantastic";
+				$crypt = new PHP_Crypt($key, PHP_Crypt::CIPHER_AES_128, PHP_Crypt::MODE_ECB);
+				$encryptedSecret = $crypt->encrypt($data);
+				$encryptedPass = $crypt->encrypt($_POST['wachtwoord']);
 
-			$connection = mysqli_connect('127.0.0.1','root','','sec_2');
-			$sql = "INSERT INTO secrets (naam,wachtwoord,secret) VALUES ('".$_POST['naam']."','".addslashes($encryptedPass)."','".addslashes($encryptedSecret)."');";
-			$query = mysqli_query($connection,$sql);
-
-
-				
+				$connection = mysqli_connect('127.0.0.1','root','','sec_2');
+				$sql = "INSERT INTO secrets (naam,wachtwoord,secret) VALUES ('".$_POST['naam']."','".addslashes($encryptedPass)."','".addslashes($encryptedSecret)."');";
+				$query = mysqli_query($connection,$sql);
 			}
 
 			if(isset($_POST['username']) && isset($_POST['password'])){
@@ -68,5 +67,6 @@ use PHP_Crypt\PHP_Crypt as PHP_Crypt;
 				}
 			}
 		?>
+
 	</body>
 </html>
